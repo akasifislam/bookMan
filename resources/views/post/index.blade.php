@@ -18,6 +18,9 @@
                             <label for="category_filter">Filter By Category &nbsp;</label>
                             <select class="form-control" name="category_filter" id="category_filter">
                                 <option value="">Select Category</option>
+                                @foreach ($categories as $key=>$category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
                             </select>
 
                             <label for="keyword">&nbsp; &nbsp;</label>

@@ -17,7 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('post.index');
+        $data['categories'] = Category::orderBy('id', 'DESC')->get();
+        return view('post.index', $data);
     }
 
     /**
@@ -64,7 +65,7 @@ class PostController extends Controller
             'category_id' => $request->category
         ]);
         $post->tags()->sync($request->tags);
-        return redirect()->route('app.post.index'); 
+        return redirect()->route('app.post.index');
     }
 
     /**

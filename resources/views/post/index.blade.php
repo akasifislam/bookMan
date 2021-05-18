@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@push('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -16,7 +18,7 @@
                     <div class="mb-2">
                         <form class="form-inline" action="">
                             <label for="category_filter">Filter By Category &nbsp;</label>
-                            <select class="form-control" name="category_filter" id="category_filter">
+                            <select class="form-control js-example-basic-single" name="category_filter" id="category_filter">
                                 <option value="">Select Category</option>
                                 @foreach ($categories as $key=>$category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -47,18 +49,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($posts as $key=>$post)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Post Title</td>
-                                    <td>Asif</td>
-                                    <td>Story</td></td>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $post->title }}</td>
+                                    <td>{{ $post->user->name }}</td>
+                                    <td>{{ $post->category->name }}</td></td>
                                     <td>dfdgfhdf</td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary" href="">edit</a>
-                                        <a class="btn btn-sm btn-success" href="">view</a>
+                                        <a class="btn btn-sm btn-primary" href="{{ route('app.post.edit',$post->id) }}">edit</a>
+                                        <a class="btn btn-sm btn-success" href="{{ route('app.post.show',$post->id) }}">view</a>
                                         <a class="btn btn-sm btn-danger" href="">delete</a>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -68,3 +72,16 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script>
+
+<script>
+    var query = <?php echo json_encode((object)Request::query()); ?>;
+    console.log(query);
+</script>
+@endpush

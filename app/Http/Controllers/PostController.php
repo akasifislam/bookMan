@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -23,7 +25,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        $data['categories'] = Category::orderBy('id', 'DESC')->get();
+        $data['tags'] = Tag::orderBy('id', 'DESC')->get();
+        return view('post.create', $data);
     }
 
     /**

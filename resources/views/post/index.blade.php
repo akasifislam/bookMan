@@ -21,7 +21,7 @@
                             <select class="form-control js-example-basic-single" name="category_filter" id="category_filter">
                                 <option value="">Select Category</option>
                                 @foreach ($categories as $key=>$category)
-                                <option value="{{ $category->name }}">{{ $category->name }}</option>
+                                <option {{ (Request::query('category') && Request::query('category')==$category->name)?'selected':''  }} value="{{ $category->name }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
 
@@ -29,7 +29,9 @@
                             <input type="text" class="form form-control" name="keyword" placeholder="Enter Keyword" id="keyword">
                             <span>&nbsp;</span>
                             <button onclick="search_post()" type="button" class="btn btn-primary">search</button>
-                            <a class="btn btn-secondary" href="">clear</a>
+                            @if (Request::query('category') || Request::query('keyword'))
+                                <a class="btn btn-secondary" href="{{ route('app.post.index') }}">clear</a>
+                            @endif
                         </form>
                     </div>
                     <div class="table-responsive">
@@ -55,7 +57,7 @@
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->user->name }}</td>
                                     <td>{{ $post->category->name }}</td></td>
-                                    <td>dfdgfhdf</td>
+                                    <td>{{ $post->comments_count }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-primary" href="{{ route('app.post.edit',$post->id) }}">edit</a>
                                         <a class="btn btn-sm btn-success" href="{{ route('app.post.show',$post->id) }}">view</a>

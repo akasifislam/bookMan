@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $data['categories'] = Category::orderBy('id', 'DESC')->get();
-        $post_query = Post::where('user_id', auth()->id());
+        $post_query = Post::withCount('comments')->where('user_id', auth()->id());
 
         if ($request->category) {
             $post_query->whereHas('category', function ($q) use ($request) {
@@ -31,7 +31,7 @@ class PostController extends Controller
         }
 
 
-        $data['posts'] = $post_query->orderBy('id', 'DESC')->get();
+        $data['posts'] = $post_query->orderBy('id', 'DESC')->paginate(10);
         return view('post.index', $data);
     }
 

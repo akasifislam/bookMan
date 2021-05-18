@@ -15,7 +15,8 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('app.post.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" class="form-control" name="title" id="title" placeholder="Title">
@@ -46,6 +47,7 @@
                                 @endforeach
                             </select>
                         </div>
+                            <button type="submit" class="btn btn-success">submit</button>
                     </form>
                 </div>
             </div>

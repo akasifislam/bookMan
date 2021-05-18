@@ -20,14 +20,23 @@
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                            @if ($errors->any('title'))
+                                <span class="text-danger">{{ $errors->first('title') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
                             <input type="text" class="form-control" name="description" id="description" placeholder="description">
+                            @if ($errors->any('description'))
+                                <span class="text-danger">{{ $errors->first('description') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="image">Description</label>
                             <input type="file" class="form-control" name="image" id="image" placeholder="choose an image">
+                            @if ($errors->any('image'))
+                                <span class="text-danger">{{ $errors->first('image') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="category">Category</label>
@@ -37,6 +46,10 @@
                                     <option value="{{ $category->id }}"> {{ $category->name }} </option>
                                 @endforeach
                             </select>
+
+                            @if ($errors->any('category'))
+                                <span class="text-danger">{{ $errors->first('category') }}</span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="tags">Tags</label>
@@ -46,6 +59,9 @@
                                     <option value="{{ $tag->id }}"> {{ $tag->name }} </option>
                                 @endforeach
                             </select>
+                            @if ($errors->any('tags'))
+                                <span class="text-danger">{{ $errors->first('tags') }}</span>
+                            @endif
                         </div>
                             <button type="submit" class="btn btn-success">submit</button>
                     </form>

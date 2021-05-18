@@ -19,21 +19,21 @@
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+                            <input type="text" class="form-control" value="{{ old('title') }}" name="title" id="title" placeholder="Title">
                             @if ($errors->any('title'))
                                 <span class="text-danger">{{ $errors->first('title') }}</span>
                             @endif
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <input type="text" class="form-control" name="description" id="description" placeholder="description">
+                            <textarea type="text" class="form-control" name="description" id="description" placeholder="description" rows="4">{{ old('description') }}</textarea>
                             @if ($errors->any('description'))
                                 <span class="text-danger">{{ $errors->first('description') }}</span>
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="image">Description</label>
-                            <input type="file" class="form-control" name="image" id="image" placeholder="choose an image">
+                            <label for="image">Image</label>
+                            <input type="file" class="form-control" value="{{ old('image') }}" name="image" id="image" placeholder="choose an image">
                             @if ($errors->any('image'))
                                 <span class="text-danger">{{ $errors->first('image') }}</span>
                             @endif
@@ -42,9 +42,11 @@
                             <label for="category">Category</label>
                             <select class="form-control js-example-basic-single" name="category" id="category">
                                 <option value=""> --- select --- </option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}"> {{ $category->name }} </option>
-                                @endforeach
+                                @if(count($categories))
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}"  {{(old('category') && old('category')==$category->id )?'selected':''}}  >{{$category->name}}</option>
+                                    @endforeach
+                                @endif
                             </select>
 
                             @if ($errors->any('category'))
@@ -55,9 +57,13 @@
                             <label for="tags">Tags</label>
                             <select class="form-control js-example-basic-single" name="tags[]" id="tags" multiple>
                                 <option value=""> --- select --- </option>
-                                @foreach ($tags as $tag)
-                                    <option value="{{ $tag->id }}"> {{ $tag->name }} </option>
-                                @endforeach
+                                @if(count($tags))
+                          @foreach($tags as $tag)
+                             <option value="{{$tag->id}}" 
+{{(old('tags') && in_array($tag->id,old('tags')) )?'selected':''}} 
+                             >{{$tag->name}}</option>
+                          @endforeach
+                        @endif
                             </select>
                             @if ($errors->any('tags'))
                                 <span class="text-danger">{{ $errors->first('tags') }}</span>

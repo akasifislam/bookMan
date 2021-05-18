@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -48,6 +50,21 @@ class PostController extends Controller
             'category.required' => 'please select a categiry',
             'tags.required' => 'please select a Tags',
         ]);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->extension();
+            $image->move(public_path('post_images'), $image_name);
+        }
+
+        $post = Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $image_name,
+            'user_id' => Auth::user()->id,
+            'category_id' => $request->category
+        ]);
+        $post->tags()->sync($request->tags);
+        return redirect()->route('app.post.index'); 
     }
 
     /**

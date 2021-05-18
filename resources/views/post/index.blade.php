@@ -21,14 +21,14 @@
                             <select class="form-control js-example-basic-single" name="category_filter" id="category_filter">
                                 <option value="">Select Category</option>
                                 @foreach ($categories as $key=>$category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->name }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
 
                             <label for="keyword">&nbsp; &nbsp;</label>
                             <input type="text" class="form form-control" name="keyword" placeholder="Enter Keyword" id="keyword">
                             <span>&nbsp;</span>
-                            <button type="button" class="btn btn-primary">search</button>
+                            <button onclick="search_post()" type="button" class="btn btn-primary">search</button>
                             <a class="btn btn-secondary" href="">clear</a>
                         </form>
                     </div>
@@ -82,6 +82,12 @@
 
 <script>
     var query = <?php echo json_encode((object)Request::query()); ?>;
-    console.log(query);
+
+  function search_post(){
+    Object.assign(query,{'category': $('#category_filter').val()});
+    Object.assign(query,{'keyword': $('#keyword').val()});
+    window.location.href="{{route('app.post.index')}}?"+$.param(query);
+  }
+    
 </script>
 @endpush

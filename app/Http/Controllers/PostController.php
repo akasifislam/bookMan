@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        dd('xfvkndf');
+        return view('post.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**

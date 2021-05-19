@@ -32,6 +32,13 @@
                             @endif
                         </div>
                         <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" value="{{ old('price') }}" name="price" id="price" placeholder="price">
+                            @if ($errors->any('price'))
+                                <span class="text-danger">{{ $errors->first('price') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" class="form-control" value="{{ old('image') }}" name="image" id="image" placeholder="choose an image">
                             @if ($errors->any('image'))

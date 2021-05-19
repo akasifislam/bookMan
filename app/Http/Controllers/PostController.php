@@ -59,6 +59,7 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'description' => 'required',
             'category' => 'required',
+            'price' => 'required',
             'image' => 'required|image|mimes:png,jpg',
             'tags' => 'required|array',
         ], [
@@ -70,9 +71,9 @@ class PostController extends Controller
             $image_name = time() . '.' . $image->extension();
             $image->move(public_path('post_images'), $image_name);
         }
-
         $post = Post::create([
             'title' => $request->title,
+            'price' => $request->price,
             'description' => $request->description,
             'image' => $image_name,
             'user_id' => Auth::user()->id,

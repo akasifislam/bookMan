@@ -40,6 +40,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Title</th>
+                                    <th>Price</th>
                                     <th>Created By</th>
                                     <th>Category</th>
                                     <th>Total Comments
@@ -55,6 +56,7 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $post->title }}</td>
+                                    <td>{{ $post->price }}</td>
                                     <td>{{ $post->user->name }}</td>
                                     <td>{{ $post->category->name }}</td></td>
                                     <td>{{ $post->comments_count }}</td>
@@ -83,7 +85,7 @@
 </script>
 
 <script>
-    var query = <?php echo json_encode((object)Request::query()); ?>;
+  var query = <?php echo json_encode((object)Request::query()); ?>;
 
   function search_post(){
     Object.assign(query,{'category': $('#category_filter').val()});

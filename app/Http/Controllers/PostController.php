@@ -60,6 +60,7 @@ class PostController extends Controller
             'description' => 'required',
             'category' => 'required',
             'price' => 'required',
+            'qty' => 'required',
             'image' => 'required|image|mimes:png,jpg',
             'tags' => 'required|array',
         ], [
@@ -74,6 +75,7 @@ class PostController extends Controller
         $post = Post::create([
             'title' => $request->title,
             'price' => $request->price,
+            'qty' => $request->qty,
             'description' => $request->description,
             'image' => $image_name,
             'user_id' => Auth::user()->id,

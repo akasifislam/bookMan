@@ -39,6 +39,13 @@
                             @endif
                         </div>
                         <div class="form-group">
+                            <label for="qty">Quentitity</label>
+                            <input type="text" class="form-control" value="{{ old('qty') }}" name="qty" id="qty" placeholder="qty">
+                            @if ($errors->any('qty'))
+                                <span class="text-danger">{{ $errors->first('qty') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" class="form-control" value="{{ old('image') }}" name="image" id="image" placeholder="choose an image">
                             @if ($errors->any('image'))

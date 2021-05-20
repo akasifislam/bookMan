@@ -73,7 +73,7 @@
                                         <a href="javascript:sort('asc')"> <i class="fas fa-sort"></i></a>
                                         @endif
                                     </th>
-                                    <th>Created By</th>
+                                    <th>Author</th>
                                     <th>Category</th>
                                     <th>Total Comments
                                         @if (Request::query('sortByComments') && Request::query('sortByComments')=='asc')

@@ -118,7 +118,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['post'] = Post::findOrFail($id);
+        $data['categories'] = Category::orderBy('id', 'DESC')->get();
+        $data['tags'] = Tag::orderBy('id', 'DESC')->get();
+        return view('post.edit', $data);
     }
 
     /**
@@ -130,7 +133,20 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'category' => 'required',
+            'price' => 'required',
+            'qty' => 'required',
+            'image' => 'nullable|image|mimes:png,jpg',
+            'tags' => 'required|array',
+        ], [
+            'category.required' => 'please select a categiry',
+            'tags.required' => 'please select a Tags',
+        ]);
+
+        return $request;
     }
 
     /**

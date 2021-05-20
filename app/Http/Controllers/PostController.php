@@ -17,6 +17,8 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        // return Post::query()->get();
+        // return Post::get();
         $data['categories'] = Category::orderBy('id', 'DESC')->get();
         $post_query = Post::withCount('comments')->where('user_id', auth()->id());
 
@@ -28,6 +30,18 @@ class PostController extends Controller
 
         if ($request->keyword) {
             $post_query->where('title', 'LIKE', '%' . $request->keyword . '%');
+        }
+        if ($request->sortByComments && in_array($request->sortByComments, ['asc', 'desc'])) {
+            $post_query->orderBy('comments_count', $request->sortByComments);
+        }
+        if ($request->sortByQuantality && in_array($request->sortByQuantality, ['asc', 'desc'])) {
+            $post_query->orderBy('comments_count', $request->sortByQuantality);
+        }
+        if ($request->sortByPrice && in_array($request->sortByPrice, ['asc', 'desc'])) {
+            $post_query->orderBy('comments_count', $request->sortByPrice);
+        }
+        if ($request->sortByName && in_array($request->sortByName, ['asc', 'desc'])) {
+            $post_query->orderBy('comments_count', $request->sortByName);
         }
 
 

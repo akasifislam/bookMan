@@ -10,7 +10,9 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <div class="">Post</div>
-                        <div class=""><a class="btn btn-primary btn-sm" href="{{ route('app.post.create') }}">create new book</a></div>
+                        <div class="">
+                            <a class="btn btn-secondary btn-sm" href="{{ route('app.post.index') }}">reload</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('app.post.create') }}">create new book</a></div>
                     </div>
                 </div>
 
@@ -39,14 +41,43 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Price</th>
+                                    <th>Name
+                                        @if (Request::query('sortByName') && Request::query('sortByName')=='asc')
+                                        <a href="javascript:sort('desc')"> <i class="fa-sort-down"></i></a>
+                                        @elseif (Request::query('sortByName') && Request::query('sortByName')=='desc')
+                                        <a href="javascript:sort('asc')"> <i class="fa-sort-up"></i></a>
+                                        @else
+                                        <a href="javascript:sort('asc')"> <i class="fas fa-sort"></i></a>
+                                        @endif
+                                    </th>
+                                    <th>Price
+                                        @if (Request::query('sortByPrice') && Request::query('sortByPrice')=='asc')
+                                        <a href="javascript:sort('desc')"> <i class="fa-sort-down"></i></a>
+                                        @elseif (Request::query('sortByPrice') && Request::query('sortByPrice')=='desc')
+                                        <a href="javascript:sort('asc')"> <i class="fa-sort-up"></i></a>
+                                        @else
+                                        <a href="javascript:sort('asc')"> <i class="fas fa-sort"></i></a>
+                                        @endif
+                                    </th>
+                                    <th>Quantality
+                                        @if (Request::query('sortByQuantality') && Request::query('sortByQuantality')=='asc')
+                                        <a href="javascript:sort('desc')"> <i class="fa-sort-down"></i></a>
+                                        @elseif (Request::query('sortByQuantality') && Request::query('sortByQuantality')=='desc')
+                                        <a href="javascript:sort('asc')"> <i class="fa-sort-up"></i></a>
+                                        @else
+                                        <a href="javascript:sort('asc')"> <i class="fas fa-sort"></i></a>
+                                        @endif
+                                    </th>
                                     <th>Created By</th>
                                     <th>Category</th>
                                     <th>Total Comments
-                                        <a href=""> <i class="fas fa-sort-down"></i> </a>
-                                        <a href=""> <i class="fas fa-sort-up"></i> </a>
-                                        <a href=""> <i class="fas fa-sort"></i> </a>
+                                        @if (Request::query('sortByComments') && Request::query('sortByComments')=='asc')
+                                        <a href="javascript:sort('desc')"> <i class="fa-sort-down"></i></a>
+                                        @elseif (Request::query('sortByComments') && Request::query('sortByComments')=='desc')
+                                        <a href="javascript:sort('asc')"> <i class="fa-sort-up"></i></a>
+                                        @else
+                                        <a href="javascript:sort('asc')"> <i class="fas fa-sort"></i></a>
+                                        @endif
                                     </th>
                                     <th>Action</th>
                                 </tr>
@@ -57,6 +88,7 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->price }}</td>
+                                    <td>{{ $post->qty }}</td>
                                     <td>{{ $post->user->name }}</td>
                                     <td>{{ $post->category->name }}</td></td>
                                     <td>{{ $post->comments_count }}</td>
@@ -90,6 +122,27 @@
   function search_post(){
     Object.assign(query,{'category': $('#category_filter').val()});
     Object.assign(query,{'keyword': $('#keyword').val()});
+    window.location.href="{{route('app.post.index')}}?"+$.param(query);
+  }
+
+  function sort(value) 
+  {
+    Object.assign(query,{'sortByComments': value});
+    window.location.href="{{route('app.post.index')}}?"+$.param(query);
+  }
+  function sort(value) 
+  {
+    Object.assign(query,{'sortByQuantality': value});
+    window.location.href="{{route('app.post.index')}}?"+$.param(query);
+  }
+  function sort(value) 
+  {
+    Object.assign(query,{'sortByPrice': value});
+    window.location.href="{{route('app.post.index')}}?"+$.param(query);
+  }
+  function sort(value) 
+  {
+    Object.assign(query,{'sortByName': value});
     window.location.href="{{route('app.post.index')}}?"+$.param(query);
   }
     

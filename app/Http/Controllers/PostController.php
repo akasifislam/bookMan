@@ -133,6 +133,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $post = Post::findOrFail($id);
         $this->validate($request, [
             'title' => 'required|max:255',
             'description' => 'required',
@@ -146,7 +147,29 @@ class PostController extends Controller
             'tags.required' => 'please select a Tags',
         ]);
 
-        return $request;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->extension();
+            $image->move(public_path('post_images'), $image_name);
+            $old_path = public_path() . 'post_images/' . $post->image;
+
+            if (\File::exists($old_path)) {
+                \File::delete($old_path);
+            }
+        } else {
+            $image_name = $post->image;
+        }
+        $post->update([
+            'title' => $request->title,
+            'price' => $request->price,
+            'qty' => $request->qty,
+            'description' => $request->description,
+            'image' => $image_name,
+            'user_id' => Auth::user()->id,
+            'category_id' => $request->category
+        ]);
+        $post->tags()->sync($request->tags);
+        return redirect()->route('app.post.index');
     }
 
     /**

@@ -11,8 +11,10 @@
                     <div class="d-flex justify-content-between">
                         <div class="">Post</div>
                         <div class="">
-                            <a class="btn btn-secondary btn-sm" href="{{ route('app.post.index') }}">reload</a>
-                            <a class="btn btn-primary btn-sm" href="{{ route('app.post.create') }}">create new book</a></div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a class="btn btn-success btn-sm" href="{{ route('app.post.index') }}">reload</a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('app.post.create') }}">create new book</a></div>
+                            </div>
                     </div>
                 </div>
 
@@ -28,12 +30,14 @@
                             </select>
 
                             <label for="keyword">&nbsp; &nbsp;</label>
-                            <input type="text" class="form form-control" name="keyword" placeholder="Enter Keyword" id="keyword">
+                            <input type="text" class="form form-control input-sm" name="keyword" placeholder="Enter Keyword" id="keyword">
                             <span>&nbsp;</span>
-                            <button onclick="search_post()" type="button" class="btn btn-primary">search</button>
-                            @if (Request::query('category') || Request::query('keyword'))
-                                <a class="btn btn-secondary" href="{{ route('app.post.index') }}">clear</a>
-                            @endif
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button onclick="search_post()" type="button" class="btn btn-primary btn-sm">search</button>
+                                @if (Request::query('category') || Request::query('keyword'))
+                                    <a class="btn btn-warning btn-sm" href="{{ route('app.post.index') }}">clear</a>
+                                @endif
+                            </div>
                         </form>
                     </div>
                     <div class="table-responsive">
@@ -50,6 +54,7 @@
                                         <a href="javascript:sort('asc')"> <i class="fas fa-sort"></i></a>
                                         @endif
                                     </th>
+                                    <th>Book</th>
                                     <th>Price
                                         @if (Request::query('sortByPrice') && Request::query('sortByPrice')=='asc')
                                         <a href="javascript:sort('desc')"> <i class="fa-sort-down"></i></a>
@@ -87,15 +92,20 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $post->title }}</td>
+                                    <td>
+                                        <img style="width: 30px;height: 25px" src="{{ asset('post_images/'.$post->image) }}" alt="">
+                                    </td>
                                     <td>{{ $post->price }}</td>
                                     <td>{{ $post->qty }}</td>
                                     <td>{{ $post->user->name }}</td>
                                     <td>{{ $post->category->name }}</td></td>
                                     <td>{{ $post->comments_count }}</td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary" href="{{ route('app.post.edit',$post->id) }}">edit</a>
-                                        <a class="btn btn-sm btn-success" href="{{ route('app.post.show',$post->id) }}">view</a>
-                                        <a class="btn btn-sm btn-danger" href="">delete</a>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a class="btn btn-sm btn-primary" href="{{ route('app.post.edit',$post->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-sm btn-success" href="{{ route('app.post.show',$post->id) }}"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-danger" href=""><i class="fas fa-trash"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach

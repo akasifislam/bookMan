@@ -45,7 +45,7 @@ class PostController extends Controller
         }
 
 
-        $data['posts'] = $post_query->orderBy('id', 'DESC')->paginate(10);
+        $data['posts'] = $post_query->orderBy('id', 'DESC')->paginate(4);
         return view('post.index', $data);
     }
 

@@ -88,6 +88,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if (count($posts))
                                 @foreach ($posts as $key=>$post)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -109,8 +110,16 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @else
+                                <tr>
+                                    <td class="bg-danger text-center text-capitalize text-3xl" colspan="9">No Books</td>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
+                        @if(count($posts))
+                            {{$posts->appends(Request::query())->links()}}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -127,7 +136,7 @@
 </script>
 
 <script>
-  var query = <?php echo json_encode((object)Request::query()); ?>;
+  var query = <?php echo json_encode((object)Request::only(['category','keyword','sortByComments','sortByQuantality','sortByPrice','sortByName'])); ?>;
 
   function search_post(){
     Object.assign(query,{'category': $('#category_filter').val()});

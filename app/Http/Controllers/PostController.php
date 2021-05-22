@@ -181,6 +181,15 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $old_path = public_path() . 'post_images/' . $post->image;
+
+        if (\File::exists($old_path)) {
+            \File::delete($old_path);
+        }
+
+        $post->delete();
+
+        return redirect()->route('app.post.index');
     }
 }

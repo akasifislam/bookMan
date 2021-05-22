@@ -105,7 +105,7 @@
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                         <a class="btn btn-sm btn-primary" href="{{ route('app.post.edit',$post->id) }}"><i class="fas fa-edit"></i></a>
                                         <a class="btn btn-sm btn-success" href="{{ route('app.post.show',$post->id) }}"><i class="fas fa-eye"></i></a>
-                                        <a class="btn btn-sm btn-danger" href=""><i class="fas fa-trash"></i></a>
+                                        <a class="btn btn-sm btn-danger" href="javascript:post_delete('{{ route('app.post.destroy',$post->id) }}')"><i class="fas fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -126,6 +126,13 @@
         </div>
     </div>
 </div>
+
+<form method="POST" id="post_delete_id">
+    @csrf
+    @method('DELETE')
+
+</form>
+
 @endsection
 @push('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -163,6 +170,24 @@
   {
     Object.assign(query,{'sortByName': value});
     window.location.href="{{route('app.post.index')}}?"+$.param(query);
+  }
+
+  function post_delete(url) 
+  {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $('#post_delete_id').attr('action',url);
+            $('#post_delete_id').submit();
+        }
+    })
   }
     
 </script>
